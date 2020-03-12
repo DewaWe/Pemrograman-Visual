@@ -1,0 +1,47 @@
+<html>
+<head>
+
+</head>
+
+<body>
+    <h3> Create Appointment</h3>
+    <form id="form">
+        <label for="name"> Name :</label><br />
+        <input type="text" name="name" required />
+        <br /><br />
+        <label for="Number"> Phone Number :</label><br />
+        <input type="number" name="number" required />
+        <br /><br />
+        <label for="Date"> Date :</label><br />
+        <input type="date" name="date" placeholder="YYY-MM-OO" required />
+        <br /><br />
+        <label for="Hour"> Hour :</label><br />
+        <input type="text" name="Hour" placeholder="hh:mm" required />
+        <br /><br />
+        <label for="Symptons"> Symptons :</label><br />
+        <textarea type="text" name="Symptons" required ></textarea>
+        <br /><br />
+        <input type="submit" />
+    </form>
+
+    <script>
+        const electron = require("electron");
+        const {
+            ipcRenderer
+        } = electron;
+
+        const form = document.getElementById("form");
+        const elements ={};
+
+        form.addEventListener("submit", enent => {
+            event.preventDefault();
+
+            for (let i = 0; i < form.elements.length; i++) {
+                if (form.elements[i].type !== "submit")
+                    elements[form.elements[i].name] = form.elements[i].value;
+            }
+            ipcRenderer.send("appointment:create", elements);
+        });
+    </script>
+</body>
+</html>
